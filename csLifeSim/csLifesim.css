@@ -38,3 +38,20 @@ button:disabled {
   color: #999;
   cursor: not-allowed;
 }
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 10px; /* Smaller padding for a smaller button */
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 3px; /* Slightly rounded corners */
+  cursor: pointer;
+  font-size: 12px; /* Smaller font size */
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
