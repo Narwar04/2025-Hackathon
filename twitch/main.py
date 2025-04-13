@@ -6,14 +6,17 @@ import sys
 from server import ryansServer
 from chat import Chat
 from gui import Gui
+from audio import audioRecognition
+
 
 chatObj = None
 
 serverObj = None
 
 def chatThread(guiObj):
-    chatObj = Chat(5, 0.5, server, guiObj)
-    chatObj.startChat(server)
+    audioRecog = audioRecognition()
+    chatObj = Chat(5, 0.1, server, guiObj)
+    chatObj.startChat(server, audioRecog)
     
 
 server = ryansServer(sock=None) #init serer

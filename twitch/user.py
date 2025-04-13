@@ -1,7 +1,7 @@
 import random
 from server import ryansServer
 
-messages_default = ["POG", "LMAO", "BAD", "L", "-2"] 
+messages_default = ["POG", "LMAO", "BAD", "L", "-2", "+2", "BOOOOOOOO"] 
 
 class User:
     id: int               # id for user

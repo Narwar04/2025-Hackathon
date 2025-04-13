@@ -3,6 +3,8 @@
 from time import sleep
 import random
 import threading
+from audio import audioRecognition
+
 
 from user import User
 from server import ryansServer
@@ -31,9 +33,13 @@ class Chat:
             name = server.recieveResonce()
             self.users.append(User(i, name, []))
             
-    def startChat(self, server: ryansServer):
-        worker = threading.Thread(target=worker_thread, args=(self, server))
+    def startChat(self, server: ryansServer, speechRecog: audioRecognition):
+        global voiceMsg
+        voiceMsg = ""
+        worker = threading.Thread(target=worker_thread, args=(self, server,))
+        worker2 = threading.Thread(target=worker_thread2, args=(self, server, speechRecog,))
         worker.start()
+        worker2.start()
 
         while True:
             user = self.users[(random.randint(0, self.usercnt) - 1)]
@@ -43,14 +49,33 @@ class Chat:
 stop_event = threading.Event()
 
 def worker_thread(chat: Chat, server: ryansServer):
+    global voiceMsg
     while True:
         if stop_event.is_set():
             break
-
+        
         user = chat.users[(random.randint(0, chat.usercnt) - 1)]
-        chat.guiObj.qtprint(user.sendLMMessage("""Generate a Twitch chat message, only the chat message.
-                                 We will take your response directly and append it to a username.
-                                 Feel free to add emojis. Make it incredibly brainrot. This format: message""", server))
 
+        chat.guiObj.qtprint(user.sendLMMessage("""Generate a Twitch chat message, only the chat message.
+                                 We will take your response directly and append it to a username. Please
+                                 respond to this message and make it pertain to what I say only
+                                 What the streamer is saying: """ + voiceMsg, server))
+
+def worker_thread2(chat: Chat, server: ryansServer, speechRecog: audioRecognition):
+    global voiceMsg # globally modify this value
+    while True:
+        if stop_event.is_set():
+            break
+        
+        speechRecog.listen()
+        user = chat.users[(random.randint(0, chat.usercnt) - 1)]
+
+        voiceMsg = speechRecog.currentMsg
+        print("Recognized Speech:" + speechRecog.currentMsg)
+
+        chat.guiObj.qtprint(user.sendLMMessage("""Generate a Twitch chat message, only the chat message.
+                                 We will take your response directly and append it to a username. Please
+                                 respond to this message and make it pertain to what I say only
+                                 What the streamer is saying: """ + voiceMsg, server))
 
 
