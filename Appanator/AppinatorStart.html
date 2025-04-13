@@ -53,7 +53,7 @@
     .question-box {
       font-size: 24px;
       margin-bottom: 40px;
-      border: 2px solid #ccc;
+      border: 2px solid black;
       border-radius: 1px;
       width: 400px;
       padding: 20px;
@@ -62,7 +62,7 @@
     }
     .button-container {
       display: inline-block;
-      border: 2px solid #ccc;
+      border: 2px solid black;
       padding: 20px;
       border-radius: 1px;
     }
@@ -114,7 +114,7 @@
         <button class="response-button" onclick="nextQuestion('No')">No</button>
         <button class="response-button" onclick="nextQuestion('Probably')">Probably</button>
         <button class="response-button" onclick="nextQuestion('Probably Not')">Probably Not</button>
-        <button class="response-button" onclick="nextQuestion('Don\t Know')">Don't Know</button>
+        <button class="response-button" onclick="nextQuestion('Dont Know')">Don't Know</button>
       </div>
       <button id="back-button" onclick="goBack()">go back</button>
       <button id="retry-button" onclick="resetQuiz()" style="display:none">play again</button>
@@ -129,6 +129,7 @@
         next: {
           "Yes": 1,
           "No": 2
+
         }
       },
       1: {
@@ -137,7 +138,8 @@
           "Yes": 3,
           "Probably": 3,
           "Probably Not": 4,
-          "No": 4
+          "No": 4,
+          "Dont Know": 0
         }
       },
       2: {
@@ -146,7 +148,8 @@
           "Yes": 5,
           "Probably": 5,
           "No": 6,
-          "Probably Not": 6
+          "Probably Not": 6,
+          "Dont Know": 0
         }
       },
       3: {
@@ -155,7 +158,9 @@
           "Yes": 66,
           "Probably": 66,
           "Probably Not": 7,
-          "No": 7
+          "No": 7,
+          "Dont Know": 0
+
         }
       },
       4: {
@@ -164,7 +169,8 @@
           "Yes": "Professor Swanson",
           "Probably Not": "Professor Swanson",
           "Probably": "Professor Swanson",
-          "No": "Professor Swanson"
+          "No": "Professor Swanson",
+          "Dont Know": "Professor Swanson" 
         }
       },
       5: {
@@ -173,7 +179,8 @@
           "Yes": 8,
           "Probably Not": "Professor Johann",
           "Probably": 8,
-          "No": "Professor Johann"
+          "No": "Professor Johann",
+          "Dont Know": 0
         }
       },
       6: {
@@ -182,7 +189,8 @@
           "Yes": 9,
           "Probably": 9,
           "Probably Not": 10,
-          "No": 10
+          "No": 10,
+          "Dont Know": 0
         }
       },
       7: {
@@ -191,7 +199,8 @@
           "Yes": 22,
           "Probably": 22,
           "Probably Not": 17,
-          "No": 17
+          "No": 17,
+          "Dont Know": 0
         }
       },
       8: {
@@ -200,7 +209,8 @@
           "Yes": "Professor Val Lapensee-Rankine",
           "Probably": "Professor Val Lapensee-Rankine",
           "Probably not": "Professor Danielle Lapensee-Rankine",
-          "No": "Professor Danielle Lapensee-Rankine"
+          "No": "Professor Danielle Lapensee-Rankine",
+          "Dont Know": 0
         }
       },
       9: {
@@ -209,7 +219,8 @@
           "Yes": "Professor Melton",
           "Probably": "Professor Melton",
           "No": "Professor Norris",
-          "Probably Not": "Professor Norris"
+          "Probably Not": "Professor Norris",
+          "Dont Know": 0
 
         }
       },
@@ -219,7 +230,8 @@
           "Yes": 14,
           "Probably": 14,
           "Probably Not": 14,
-          "No": 14
+          "No": 14,
+          "Dont Know": 0
         }
       },
       14: {
@@ -228,7 +240,8 @@
           "Yes": "Professor Dixon",
           "Probably": "Professor Dixon",
           "Probably Not": 18,
-          "No": 18
+          "No": 18,
+          "Dont Know": 0
           
         }
       },
@@ -238,14 +251,16 @@
           "Yes": "Professor Madadi",
           "Probably": "Professor Madadi",
           "Probably Not": 21,
-          "No": 21
+          "No": 21,
+          "Dont Know": 0
         }
       },
       21: {
         question: "Does the professor do Kahoots?",
         next: {
           "Yes": "Professor Sharmin",
-          "No": null
+          "No": null,
+          "Dont Know": 0
         }
       },
       66: {
@@ -254,7 +269,8 @@
           "Yes": 11,
           "Probably": 11,
           "Probably Not": 10,
-          "No": 10
+          "No": 10,
+          "Dont Know": 0
         }
       },
       17: {
@@ -263,7 +279,8 @@
           "Yes": 20,
           "Probably": 20,
           "Probably Not": null,
-          "No": null
+          "No": null,
+          "Dont Know": 0
         }
       },
       20: {
@@ -272,7 +289,8 @@
           "Yes": 23,
           "Probably": 23,
           "Probably Not": 24,
-          "No": 24
+          "No": 24,
+          "Dont Know": 0
         }
       },
       23: {
@@ -280,7 +298,8 @@
         next: {
           "Yes": "Professor Feng",
           "Probably Not": 26,
-          "No": 26
+          "No": 26,
+          "Dont Know": 0
         }
       },
       24: {
@@ -288,7 +307,8 @@
         next: {
           "Yes": "Professor Javidian",
           "Probably Not": 27,
-          "No": 27
+          "No": 27,
+          "Dont Know": 0
         }
       },
       26: {
@@ -296,7 +316,8 @@
         next: {
           "Yes": "Professor Rink",
           "Probably Not": null,
-          "No": null
+          "No": null,
+          "Dont Know": 0
         }
       },
       27: {
@@ -305,7 +326,8 @@
           "Yes": "Professor Hamza",
           "Probably": "Professor Hamza",
           "Probably Not": 10,
-          "No": 10
+          "No": 10,
+          "Dont Know": 0
           
         }
       },
@@ -315,7 +337,8 @@
           "Yes": "Professor Tashakkori",
           "Probably": "Professor Tashakkori",
           "Probably Not": 25,
-          "No": 25
+          "No": 25,
+          "Dont Know": 0
         }
       },
       25: {
@@ -324,7 +347,8 @@
           "Yes": "Professor Fenwick",
           "Probably": "Professor Fenwick",
           "Probably Not": null,
-          "No": null
+          "No": null,
+          "Dont Know": 0
         }
       },
       12: {
@@ -333,7 +357,8 @@
           "Yes": "Professor Wilkes",
           "Probably": "Professor Wilkes",
           "Probably Not": 16,
-          "No": 16
+          "No": 16,
+          "Dont Know": 0
         }
       },
       16: {
@@ -342,7 +367,8 @@
           "Yes": "Professor Perry",
           "Probably": "Professor Perry",
           "Probably Not": 19,
-          "No": 19
+          "No": 19,
+          "Dont Know": 0
         }
       },
       19: {
@@ -351,7 +377,8 @@
           "Yes": "Professor Hills",
           "Probably": "Professor Hills",
           "Probably Not": 77,
-          "No": 77
+          "No": 77,
+          "Dont Know": 0
         }
       },
       77: {
@@ -360,7 +387,8 @@
           "Yes": "Professor Waters",
           "Probably": "Professor Waters",
           "Probably Not": 12,
-          "No": 12
+          "No": 12,
+          "Dont Know": 0
         }
       },
       11: {
@@ -369,7 +397,8 @@
           "Yes": "Professor Cagne",
           "Probably Not": "Professor Cagne",
           "Probably Not": 15,
-          "No": 15
+          "No": 15,
+          "Dont Know": 0
         }
       },
       15: {
@@ -378,7 +407,8 @@
           "Yes": "Professor Polanski",
           "Probably Not": 7,
           "Probably": "Professor Polanski",
-          "No": null
+          "No": null,
+          "Dont Know": 0
         }
       }
     };
