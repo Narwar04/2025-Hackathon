@@ -40,7 +40,7 @@ class donationAlertWindow(QtWidgets.QMainWindow):
 
 
 
-        self.movie = QtGui.QMovie("./gifs/rainbowgangdamn.gif")
+        self.movie = QtGui.QMovie("rainbowgangdamn.gif")
         self.movie.setScaledSize(QtCore.QSize(200, 200))
         self.label.setMovie(self.movie)
         self.movie.start()
