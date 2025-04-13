@@ -1,8 +1,25 @@
-from chat import *
+#!/usr/bin/env python3
 
-if __name__ == '__main__':
-    stop_event = threading.Event()
-    signal.signal(signal.SIGINT, handle_kb_interrupt)
-    server = ryansServer(sock=None) #init serer
-    chat = Chat(5, 0.5, server) #init chat
-    chat.startChat(server=server)
+import threading
+import sys
+
+from server import ryansServer
+from chat import Chat
+from gui import Gui
+
+chatObj = None
+
+serverObj = None
+
+def chatThread(guiObj):
+    chatObj = Chat(5, 0.5, server, guiObj)
+    chatObj.startChat(server)
+    
+
+server = ryansServer(sock=None) #init serer
+guiObj = Gui()
+
+thread = threading.Thread(target=chatThread, args=(guiObj,))
+thread.start()
+
+sys.exit(guiObj.app.exec())

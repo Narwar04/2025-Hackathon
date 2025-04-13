@@ -1,9 +1,12 @@
-from time import sleep 
-import signal
-from user import User
-from server import ryansServer
+#!/usr/bin/env python3
+
+from time import sleep
 import random
 import threading
+
+from user import User
+from server import ryansServer
+import gui
 
 class Chat: 
     users: list[User] #list of users
@@ -11,11 +14,12 @@ class Chat:
     usercnt: int
     generatingMessage: bool    
     
-    def __init__(self, usercnt:int, chatspd: float, server: ryansServer):
+    def __init__(self, usercnt:int, chatspd: float, server: ryansServer, guiObj: gui.Gui):
         self.users = []
         self.speed = chatspd
         self.usercnt = usercnt
         self.generatingMessage = False
+        self.guiObj = guiObj
 
         server.connectServer()
 
@@ -33,7 +37,7 @@ class Chat:
 
         while True:
             user = self.users[(random.randint(0, self.usercnt) - 1)]
-            print(user.sendDefaultMessage())
+            self.guiObj.qtprint(user.sendDefaultMessage())
             sleep(random.random()/self.speed)
 
 stop_event = threading.Event()
@@ -44,18 +48,9 @@ def worker_thread(chat: Chat, server: ryansServer):
             break
 
         user = chat.users[(random.randint(0, chat.usercnt) - 1)]
-        print(user.sendLMMessage("""Generate a chat message, only the chat message.
+        chat.guiObj.qtprint(user.sendLMMessage("""Generate a Twitch chat message, only the chat message.
                                  We will take your response directly and append it to a username.
                                  Feel free to add emojis. Make it incredibly brainrot. This format: message""", server))
 
-def handle_kb_interrupt(sig, frame):
-    stop_event.set()
-    exit()
-
-
-
-# server = ryansServer(sock=None) #init serer
-# chat = Chat(5, 0.5, server) #init chat
-# chat.startChat(server=server)
 
 
