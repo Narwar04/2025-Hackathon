@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Scientist Life Sim</title>
+    <link rel="stylesheet" href="csLifesim.css">
+</head>
+<body>
+  <div id="store">  
+    <h1>Store</h1>
+    <h2>Nibbles: <span id="nibble-count">0</span></h2>
+    <h3 id="nibbles-per-second">Nibbles per second: 0</h3>
+    <button onclick="upgradeKeyboard()">Upgrade Keyboard (Cost: <span id="upgrade-cost">10</span> nibbles)</button>
+    <button id="consume-caffeine-btn" onclick="cusumeCaffeine()">Consume Caffeine (Cost: 1000 nibbles)</button>
+    <button onclick="upgradeAI()">Upgrade AI (Cost: <span id="ai-upgrade-cost">500</span> nibbles)</button> 
+    <button onclick="buyExtraMonitor()">Buy Extra Monitor (Cost: <span id="monitor-cost">2000</span> nibbles)</button>
+  </div>
+  <div id="code-output"></div>
+  
+  <script src="csLifeSim.js"></script>
+</body>
+</html>
