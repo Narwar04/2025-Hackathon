@@ -1,4 +1,4 @@
-let nibbles = 10000000;
+let nibbles = 0;
 let nibblePerKey = 1;
 let snippetIndex = 0;
 let codeSnippets = []; 
