@@ -11,22 +11,26 @@ class User:
 
     def __init__(self, id, name, lmmessages): #initialization func
         self.id = id
-        self.name = name
+        self.name = self.userColor(name)
         self.lmmessages = lmmessages
         self.messages = messages_default
+
+    def userColor(self, name):
+        color = ["#"+''.join([random.choice('0123456789ABCDEF') for j in range(6)])][0]
+        return f'<span style="color:{color}">{name}</span>'
 
     def addMessage(self, message: str):
         self.messages.append(message)
 
     def sendDefaultMessage(self):
         msglen = len(self.messages) - 1
-        msg = self.name + ": " + self.messages[random.randint(0, msglen)]
+        msg = f'<br>{self.name}: {self.messages[random.randint(0, msglen)]}'
         return msg
     
     def sendLMMessage(self, prompt:str, server:ryansServer):
         server.sendPrompt(prompt)
         msg = server.recieveResonce()
-        msg = self.name + ": " + msg
+        msg = f'<br>{self.name}: {msg}'
         return msg
 
 
