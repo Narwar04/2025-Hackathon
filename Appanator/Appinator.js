@@ -82,3 +82,6 @@ const professorProfiles =
   },
 
 ];
+document.getElementById('start-game-button').addEventListener('click', () => {
+  window.location.href = './AppinatorStart.html'; // Replace 'game.html' with the path to your new file
+});

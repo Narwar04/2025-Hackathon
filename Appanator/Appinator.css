@@ -1,0 +1,46 @@
+body {
+  background-image: url("../images/backdrop.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.image-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  height: 100vh;
+
+}
+
+#cool-dude {
+  max-width: 300px; /* Adjust the size of the image */
+  height: auto;
+}
+
+.speech-bubble {
+  width: 220px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: black;
+  text-align: center;
+}
+#start-game-button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#start-game-button:hover {
+  background-color: #0056b3;
+}
