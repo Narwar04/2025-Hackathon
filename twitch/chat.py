@@ -25,8 +25,9 @@ class Chat:
 
         for i in range(usercnt):
             server.sendPrompt("""You are generating twitch chat names.
-                               Please generate a random twitch chat name.
-                              Just the name, nothing else. We will take this directly and append it to a message.
+                               Please generate a random twitch chat name. Make it very nuetral, but funny.
+                              Just the name, nothing else, no quotations.
+                               We will take this directly and append it to a message.
                               """)
             name = server.recieveResonce()
             self.users.append(User(i, name, []))
@@ -44,17 +45,16 @@ class Chat:
 
         while True:
             user = self.users[(random.randint(0, self.usercnt) - 1)]
-            self.guiObj.qtprint(user.sendDefaultMessage())
-
-            sleep(random.random()/self.speed)
+            self.guiObj.qtprint(user.sendDefaultMessage()) 
+            sleep(random.random()/self.speed)    # higher speed means greater default messages, aka more messages
 
 def worker_thread(chat: Chat, server: ryansServer):
     global voiceMsg #globally modifys val
     while True:       
         user = chat.users[(random.randint(0, chat.usercnt) - 1)]
-
         chat.guiObj.qtprint(user.sendLMMessage("""Generate a Twitch chat message, only the chat message.
-                                 We will take your response directly and append it to a username. Please
+                                 We will take your response directly and append it to a username. No quotations around
+                                 the message, we already know its a string. Nothing offensive. Please
                                  respond to this message and make it pertain to what I say only
                                  What the streamer is saying: """ + voiceMsg, server))
 

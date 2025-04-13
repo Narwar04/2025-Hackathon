@@ -24,7 +24,7 @@ class donationAlertWindow(QtWidgets.QMainWindow):
         screenRect = app.primaryScreen().geometry()
         self.name = username
         self.label = QtWidgets.QLabel()
-        self.label2 = QtWidgets.QLabel(self.name +"has gifted 40 dollars!")
+        self.label2 = QtWidgets.QLabel(self.name +" has gifted " + random.randint(1, 100) + "dollars!")
         self.label2.setTextFormat(QtCore.Qt.TextFormat.RichText)
         self.label2.setStyleSheet("""
                             QLabel {
@@ -91,6 +91,7 @@ class donationAlertWindow(QtWidgets.QMainWindow):
 
 class Gui():
     def __init__(self):
+        self.users = ["wilson", "natan", "DrHouse27", "orangelover", "bobathen"]
         self.app = QtWidgets.QApplication()
         rect = self.app.primaryScreen().geometry()
 
@@ -98,7 +99,7 @@ class Gui():
         # self.app.window = donationAlertWindow(self.app, "wilson")
         print("start timer")
         self.timer = QtCore.QTimer()
-        self.timer.singleShot(5000, lambda: self.donationAlert(self.app))
+        self.timer.singleShot(50000, lambda: self.donationAlert(self.app, random.choice(self.users)))
         # self.timer.singleShot(2500, self.app.window.hide)
 
 
@@ -117,14 +118,14 @@ class Gui():
         self.widget.text.insertHtml(str)
         self.widget.text.ensureCursorVisible()
 
-    def donationAlert(self, app: QtWidgets.QApplication):
+    def donationAlert(self, app: QtWidgets.QApplication, name):
         print("donationAlert")
-        app.window = donationAlertWindow(self.app, "wilson")
+        app.window = donationAlertWindow(self.app, name)
         # print(window.movie.state())
-        self.timer.singleShot(400, lambda: app.window.widget.hide())
-        self.timer.singleShot(400, lambda: app.window.label2.hide())
+        self.timer.singleShot(4000, lambda: app.window.widget.hide())
+        self.timer.singleShot(4000, lambda: app.window.label2.hide())
 
-        self.timer.singleShot(100000 * (random.random()), lambda: self.donationAlert(app))
+        self.timer.singleShot(500000 * (random.random()), lambda: self.donationAlert(app, random.choice(self.users)))
 
     # def turnOff(self,  app: QtWidgets.QApplication):
     #     print("turn off")

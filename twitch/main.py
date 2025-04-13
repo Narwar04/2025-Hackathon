@@ -15,7 +15,7 @@ serverObj = None
 
 def chatThread(guiObj):
     audioRecog = audioRecognition()
-    chatObj = Chat(5, 0.1, server, guiObj)
+    chatObj = Chat(50, 0.1, server, guiObj)
     chatObj.startChat(server, audioRecog) # for generating messages and for audio 
     
 
