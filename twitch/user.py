@@ -34,10 +34,6 @@ class User:
         return msg
 
 
-    
-
-
-
 # user1 = User(21, "user21", [], [])
 
 # # print(user1.messages)

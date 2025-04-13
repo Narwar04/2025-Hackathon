@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import threading
 import sys
@@ -9,14 +9,14 @@ from gui import Gui
 from audio import audioRecognition
 
 
-chatObj = None
 
+chatObj = None
 serverObj = None
 
 def chatThread(guiObj):
     audioRecog = audioRecognition()
     chatObj = Chat(5, 0.1, server, guiObj)
-    chatObj.startChat(server, audioRecog)
+    chatObj.startChat(server, audioRecog) # for generating messages and for audio 
     
 
 server = ryansServer(sock=None) #init serer

@@ -4,8 +4,6 @@ from time import sleep
 import random
 import threading
 from audio import audioRecognition
-
-
 from user import User
 from server import ryansServer
 import gui
@@ -36,24 +34,23 @@ class Chat:
     def startChat(self, server: ryansServer, speechRecog: audioRecognition):
         global voiceMsg
         voiceMsg = ""
-        worker = threading.Thread(target=worker_thread, args=(self, server,))
-        worker2 = threading.Thread(target=worker_thread2, args=(self, server, speechRecog,))
+        worker = threading.Thread(target=worker_thread, args=(self, server,)) # sends stream of messages
+        worker2 = threading.Thread(target=worker_thread2, args=(self, server, speechRecog,)) #takes care of speech
+        # donationWorker = threading.Thread(target=donationMessage, args=(self,))
         worker.start()
         worker2.start()
+        # donationWorker.start()
+        worker
 
         while True:
             user = self.users[(random.randint(0, self.usercnt) - 1)]
             self.guiObj.qtprint(user.sendDefaultMessage())
+
             sleep(random.random()/self.speed)
 
-stop_event = threading.Event()
-
 def worker_thread(chat: Chat, server: ryansServer):
-    global voiceMsg
-    while True:
-        if stop_event.is_set():
-            break
-        
+    global voiceMsg #globally modifys val
+    while True:       
         user = chat.users[(random.randint(0, chat.usercnt) - 1)]
 
         chat.guiObj.qtprint(user.sendLMMessage("""Generate a Twitch chat message, only the chat message.
@@ -63,10 +60,7 @@ def worker_thread(chat: Chat, server: ryansServer):
 
 def worker_thread2(chat: Chat, server: ryansServer, speechRecog: audioRecognition):
     global voiceMsg # globally modify this value
-    while True:
-        if stop_event.is_set():
-            break
-        
+    while True:       
         speechRecog.listen()
         user = chat.users[(random.randint(0, chat.usercnt) - 1)]
 
@@ -78,4 +72,10 @@ def worker_thread2(chat: Chat, server: ryansServer, speechRecog: audioRecognitio
                                  respond to this message and make it pertain to what I say only
                                  What the streamer is saying: """ + voiceMsg, server))
 
-
+# def donationMessage(chat: Chat):
+#     global voiceMsg # globally modify this value
+#     while True:       
+#         # user = chat.users[(random.randint(0, chat.usercnt) - 1)]
+#         # if(random.random() < 0.10):
+#         #         print("hello gui time")
+#         #         # chat.guiObj.donationAlert(user.name)

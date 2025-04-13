@@ -13,10 +13,8 @@ class audioRecognition:
             with speech_recognition.Microphone() as mic:
                 self.recognizer.adjust_for_ambient_noise(mic, duration=0.2)
                 audio = self.recognizer.listen(mic)
-
-                text = self.recognizer.recognize_google(audio)
-                text = text.lower()
-                self.currentMsg = text
+                text = self.recognizer.recognize_google(audio) 
+                self.currentMsg = text.lower() #converts upper to lower
                 return self.currentMsg
         
         except Exception as e:
