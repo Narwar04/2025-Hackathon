@@ -92,6 +92,7 @@ class donationAlertWindow(QtWidgets.QMainWindow):
 class Gui():
     def __init__(self):
         self.app = QtWidgets.QApplication()
+        rect = self.app.primaryScreen().geometry()
 
         print("before gif")
         # self.app.window = donationAlertWindow(self.app, "wilson")
@@ -104,6 +105,7 @@ class Gui():
 
         self.widget = ChatWidget()
         self.widget.resize(400, 600)
+        self.widget.move(rect.topLeft())
         self.widget.setStyleSheet("background: transparent;")
         self.widget.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.widget.setWindowFlag(QtCore.Qt.FramelessWindowHint)
