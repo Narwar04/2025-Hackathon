@@ -1,4 +1,5 @@
-from time import sleep
+from time import sleep 
+import signal
 from user import User
 from server import ryansServer
 import random
@@ -35,15 +36,26 @@ class Chat:
             print(user.sendDefaultMessage())
             sleep(random.random()/self.speed)
 
+stop_event = threading.Event()
+
 def worker_thread(chat: Chat, server: ryansServer):
     while True:
+        if stop_event.is_set():
+            break
+
         user = chat.users[(random.randint(0, chat.usercnt) - 1)]
         print(user.sendLMMessage("""Generate a chat message, only the chat message.
                                  We will take your response directly and append it to a username.
                                  Feel free to add emojis. Make it incredibly brainrot. This format: message""", server))
 
-server = ryansServer(sock=None) #init serer
-chat = Chat(5, 0.5, server) #init chat
-chat.startChat(server=server)
+def handle_kb_interrupt(sig, frame):
+    stop_event.set()
+    exit()
+
+
+
+# server = ryansServer(sock=None) #init serer
+# chat = Chat(5, 0.5, server) #init chat
+# chat.startChat(server=server)
 
 
