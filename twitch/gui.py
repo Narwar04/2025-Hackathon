@@ -24,7 +24,7 @@ class donationAlertWindow(QtWidgets.QMainWindow):
         screenRect = app.primaryScreen().geometry()
         self.name = username
         self.label = QtWidgets.QLabel()
-        self.label2 = QtWidgets.QLabel(self.name +" has gifted " + random.randint(1, 100) + "dollars!")
+        self.label2 = QtWidgets.QLabel(self.name +" has gifted " + str(random.randint(1, 100)) + "dollars!")
         self.label2.setTextFormat(QtCore.Qt.TextFormat.RichText)
         self.label2.setStyleSheet("""
                             QLabel {
