@@ -1,12 +1,426 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appinator</title>
-    <link rel="stylesheet" href="Appinator.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appinator</title>
+  <link rel="stylesheet" href="Appinator.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background-color: #040202;
+      color: white;
+
+      background-image: url("../images/backdrop.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      align-items: stretch;
+      justify-content: space-between;
+      padding: 10px;
+      box-sizing: border-box;
+      height: 100vh;
+    }
+    .image-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .image-section img {
+      height: 100vh;
+      width: auto;
+    }
+    .content-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .question-box {
+      font-size: 24px;
+      margin-bottom: 40px;
+      border: 2px solid #ccc;
+      border-radius: 1px;
+      width: 400px;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+    .button-container {
+      display: inline-block;
+      border: 2px solid #ccc;
+      padding: 20px;
+      border-radius: 1px;
+    }
+    .response-button {
+      display: block;
+      width: 200px;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+    .response-button:hover {
+      background-color: #ddd;
+    }
+    #back-button, #retry-button {
+      margin-top: 20px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #666;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+    #back-button:hover, #retry-button:hover {
+      background-color: #444;
+    }
+  </style>
 </head>
 <body>
- 
+  <div class="container">
+    <div class="image-section">
+      <a href="../images/coolDude.png">
+        <img src="../images/coolDude.png"" alt="Image">
+      </a>
+    </div>
+
+    <div class="content-section">
+      <div class="question-box" id="question-box">
+        Is this professor a man?
+      </div>
+
+      <div class="button-container" id="button-container">
+        <button class="response-button" onclick="nextQuestion('Yes')">Yes</button>
+        <button class="response-button" onclick="nextQuestion('No')">No</button>
+        <button class="response-button" onclick="nextQuestion('Probably')">Probably</button>
+        <button class="response-button" onclick="nextQuestion('Probably Not')">Probably Not</button>
+        <button class="response-button" onclick="nextQuestion('Don\t Know')">Don't Know</button>
+      </div>
+      <button id="back-button" onclick="goBack()">go back</button>
+      <button id="retry-button" onclick="resetQuiz()" style="display:none">play again</button>
+    </div>
+  </div>
+  <script>
+    let step = 0;
+  
+    const questions = {
+      0: {
+        question: "Is this professor a man?",
+        next: {
+          "Yes": 1,
+          "No": 2
+        }
+      },
+      1: {
+        question: "Does the professor have a full head of hair?",
+        next: {
+          "Yes": 3,
+          "Probably": 3,
+          "Probably Not": 4,
+          "No": 4
+        }
+      },
+      2: {
+        question: "Does the professor have brown hair?",
+        next: {
+          "Yes": 5,
+          "Probably": 5,
+          "No": 6,
+          "Probably Not": 6
+        }
+      },
+      3: {
+        question: "Does the professor have brown hair?",
+        next: {
+          "Yes": 66,
+          "Probably": 66,
+          "Probably Not": 7,
+          "No": 7
+        }
+      },
+      4: {
+        question: "Does the professor like playing video games?",
+        next: {
+          "Yes": "Professor Swanson",
+          "Probably Not": "Professor Swanson",
+          "Probably": "Professor Swanson",
+          "No": "Professor Swanson"
+        }
+      },
+      5: {
+        question: "Does the professor have a sibling who works in the department?",
+        next: {
+          "Yes": 8,
+          "Probably Not": "Professor Johann",
+          "Probably": 8,
+          "No": "Professor Johann"
+        }
+      },
+      6: {
+        question: "Does the professor have blonde hair?",
+        next: {
+          "Yes": 9,
+          "Probably": 9,
+          "Probably Not": 10,
+          "No": 10
+        }
+      },
+      7: {
+        question: "Does the professor have white hair?",
+        next: {
+          "Yes": 22,
+          "Probably": 22,
+          "Probably Not": 17,
+          "No": 17
+        }
+      },
+      8: {
+        question: "Is the professor an older sibling?",
+        next: {
+          "Yes": "Professor Val Lapensee-Rankine",
+          "Probably": "Professor Val Lapensee-Rankine",
+          "Probably not": "Professor Danielle Lapensee-Rankine",
+          "No": "Professor Danielle Lapensee-Rankine"
+        }
+      },
+      9: {
+        question: "Does the professor have cool tattoos?",
+        next: {
+          "Yes": "Professor Melton",
+          "Probably": "Professor Melton",
+          "No": "Professor Norris",
+          "Probably Not": "Professor Norris"
+
+        }
+      },
+      10: {
+        question: "Does the professor have black hair?",
+        next: {
+          "Yes": 14,
+          "Probably": 14,
+          "Probably Not": 14,
+          "No": 14
+        }
+      },
+      14: {
+        question: "Does the professor play roller derby?",
+        next: {
+          "Yes": "Professor Dixon",
+          "Probably": "Professor Dixon",
+          "Probably Not": 18,
+          "No": 18
+          
+        }
+      },
+      18: {
+        question: "Is the professor into robotics?",
+        next: {
+          "Yes": "Professor Madadi",
+          "Probably": "Professor Madadi",
+          "Probably Not": 21,
+          "No": 21
+        }
+      },
+      21: {
+        question: "Does the professor do Kahoots?",
+        next: {
+          "Yes": "Professor Sharmin",
+          "No": null
+        }
+      },
+      66: {
+        question: "Is this professor from Europe?",
+        next: {
+          "Yes": 1,
+          "Probably": 1,
+          "Probably Not": 10,
+          "No": 10
+        }
+      },
+      17: {
+        question: "Does the professor have black hair?",
+        next: {
+          "Yes": 20,
+          "Probably": 20,
+          "Probably Not": null,
+          "No": null
+        }
+      },
+      20: {
+        question: "Is the professor younger?",
+        next: {
+          "Yes": 23,
+          "Probably": 23,
+          "Probably Not": 24,
+          "No": 24
+        }
+      },
+      23: {
+        question: "Does the professor wear earrings?",
+        next: {
+          "Yes": "Professor Feng",
+          "Probably Not": 26,
+          "No": 26
+        }
+      },
+      24: {
+        question: "Does the professor like ping-pong and racketball?",
+        next: {
+          "Yes": "Professor Javidian",
+          "Probably Not": 27,
+          "No": 27
+        }
+      },
+      26: {
+        question: "Is the professor a slow grader?",
+        next: {
+          "Yes": "Professor Rink",
+          "Probably Not": null,
+          "No": null
+        }
+      },
+      27: {
+        question: "Has the professor lived in Egypt?",
+        next: {
+          "Yes": "Professor Hamza",
+          "Probably": "Professor Hamza",
+          "Probably Not": 10,
+          "No": 10
+          
+        }
+      },
+      22: {
+        question: "Is the professor a Bee nerd?",
+        next: {
+          "Yes": "Professor Tashakkori",
+          "Probably": "Professor Tashakkori",
+          "Probably Not": 25,
+          "No": 25
+        }
+      },
+      25: {
+        question: "Is the professor married?",
+        next: {
+          "Yes": "Professor Fenwick",
+          "Probably": "Professor Fenwick",
+          "Probably Not": null,
+          "No": null
+        }
+      },
+      12: {
+        question: "Is the professor a Bee nerd?",
+        next: {
+          "Yes": "Professor Wilkes",
+          "Probably": "Professor Wilkes",
+          "Probably Not": 16,
+          "No": 16
+        }
+      },
+      16: {
+        question: "Does the professor have long hair?",
+        next: {
+          "Yes": "Professor Perry",
+          "Probably": "Professor Perry",
+          "Probably Not": 19,
+          "No": 19
+        }
+      },
+      19: {
+        question: "Is the professor into cloud computing?",
+        next: {
+          "Yes": "Professor Hills",
+          "Probably": "Professor Hills",
+          "Probably Not": 77,
+          "No": 77
+        }
+      },
+      77: {
+        question: "Is this professor a Twitch streamer?",
+        next: {
+          "Yes": "Professor Waters",
+          "Probably": "Professor Waters",
+          "Probably Not": 12,
+          "No": 12
+        }
+      },
+      11: {
+        question: "Does the professor hail from France?",
+        next: {
+          "Yes": "Professor Cagne",
+          "Probably Not": "Professor Cagne",
+          "Probably Not": 15,
+          "No": 15
+        }
+      },
+      15: {
+        question: "Is the professor from Ukraine?",
+        next: {
+          "Yes": "Professor Polanski",
+          "Probably Not": 7,
+          "Probably": "Professor Polanski",
+          "No": null
+        }
+      }
+    };
+  
+    function nextQuestion(answer) {
+      const current = questions[step];
+      const next = current.next?.[answer];
+  
+      if (typeof next === 'string') {
+        showResult(next);
+      } else if (next != null) {
+        step = next;
+        updateQuestion();
+      }
+    }
+  
+    function updateQuestion() {
+      const q = document.getElementById("question-box");
+      const current = questions[step];
+      q.textContent = current?.question ?? "End of line.";
+    }
+  
+    function showResult(name) {
+      document.getElementById("question-box").textContent = "I think your professor is: " + name;
+      document.getElementById("button-container").style.display = "none";
+      document.getElementById("retry-button").style.display = "inline-block";
+    }
+  
+    function resetQuiz() {
+      step = 0;
+      updateQuestion();
+      document.getElementById("button-container").style.display = "inline-block";
+      document.getElementById("retry-button").style.display = "none";
+    }
+  
+    function goBack() {
+      alert("go back doesnt work lol");
+    }
+  
+    window.onload = updateQuestion;
+  </script>
+  
 </body>
 </html>
