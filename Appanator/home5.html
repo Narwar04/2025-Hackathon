@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appinator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background-color: #040202;
+      color: white;
+    }
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      align-items: stretch;
+      justify-content: space-between;
+      padding: 10px;
+      box-sizing: border-box;
+      height: 100vh;
+    }
+    .image-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .image-section img {
+      height: 100%;
+      width: auto;
+      border-radius: 10px;
+    }
+    .content-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .question-box {
+      font-size: 24px;
+      margin-bottom: 40px;
+      border: 2px solid #ccc;
+      border-radius: 1px;
+      width: 400px;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+    .button-container {
+      display: inline-block;
+      border: 2px solid #ccc;
+      padding: 20px;
+      border-radius: 1px;
+    }
+    .response-button {
+      display: block;
+      width: 200px;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+    .response-button:hover {
+      background-color: #ddd;
+    }
+    #back-button, #retry-button {
+      margin-top: 20px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #666;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+    #back-button:hover, #retry-button:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="image-section">
+      <a href="https://lh3.googleusercontent.com/pw/AP1GczOhhBf4lZTcjP_WpEk6PIze7-OwRQK2WvMF6Pg3wbKufOUDslvF2mtBAbSXkrL-bNc3voa8k4xh80iquE4dpdKw4S_MT6shl2QIve6k8EYu0C7fBrg=w2400?source=screenshot.guru">
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczOhhBf4lZTcjP_WpEk6PIze7-OwRQK2WvMF6Pg3wbKufOUDslvF2mtBAbSXkrL-bNc3voa8k4xh80iquE4dpdKw4S_MT6shl2QIve6k8EYu0C7fBrg=w600-h315-p-k" alt="Image">
+      </a>
+    </div>
+
+    <div class="content-section">
+      <div class="question-box" id="question-box">
+        Is this professor a man?
+      </div>
+
+      <div class="button-container" id="button-container">
+        <button class="response-button" onclick="nextQuestion('Yes')">Yes</button>
+        <button class="response-button" onclick="nextQuestion('No')">No</button>
+        <button class="response-button" onclick="nextQuestion('Probably')">Probably</button>
+        <button class="response-button" onclick="nextQuestion('Probably Not')">Probably Not</button>
+        <button class="response-button" onclick="nextQuestion('Don\t Know')">Don't Know</button>
+      </div>
+      <button id="back-button" onclick="goBack()">Go Back</button>
+      <button id="retry-button" onclick="resetQuiz()" style="display:none">play again</button>
+    </div>
+  </div>
+
+  <script>
+
+    const questions = [
+      "Is this professor a man?",
+      "Is this professor young?",
+      "Does this professor play roller derby?",
+      "Does this professor interact with bees?",
+      "Does this professor have hair"
+    ];
+
+    let answerHistory = [];
+    let currentQuestionInn = 0;
+
+    const professorProfiles = 
+    [
+      { name: "Swanson", answers: ["Yes", "No", ["No", "Probably Not"], ["No", "Probably Not"], "No"]},
+      { name: "Norris", answers: ["No", "No", ["No", "Probably Not"], "No", "Yes"]},
+      { name: "Dixon", answers: ["No", ["Yes", "Probably"], "Yes", ["No", "Probably Not"], "Yes"] },
+      { name: "Waters", answers: ["Yes", ["Yes", "Probably"], ["No", "Probably Not"], "Yes"] }
+    ];
+
+    function matchesProfile(profile) 
+    {
+      for (let i = 0; i < profile.answers.length; i++) 
+      {
+        const acceptable = profile.answers[i]; //acceptable answers
+        const userAnswer = answerHistory[i]; // the users answer
+
+        if (Array.isArray(acceptable)) //multiple answers
+        {
+          if (!acceptable.includes(userAnswer)) return false; //if user answer not in list of acceptable
+        } 
+        else 
+        {
+          if (acceptable !== userAnswer) return false; //if user answer is just straight up not there (strict !==)
+        }
+      }
+
+      return true; //otherwise obviously return true
+    }
+
+    //called when u click a button
+
+    function nextQuestion(answer) //go to next question
+    {
+      answerHistory.push(answer); //add to array
+      currentQuestionInn++; 
+
+    // if there are still questions to ask
+      if (currentQuestionInn < questions.length) 
+      {
+        document.getElementById("question-box").textContent = questions[currentQuestionInn];
+      } 
+
+      else //there are no more questions to ask
+      {
+        const matched = professorProfiles.find(p => matchesProfile(p)); // if u get a match
+        if (matched) 
+        {
+          document.getElementById("question-box").textContent = `I think your professor is.... ${matched.name}`;
+        } 
+
+        else //u didnt get a match
+        {
+          document.getElementById("question-box").textContent = "hmmmm....I can't think of who that is";
+          document.getElementById("retry-button").style.display = "inline-block";
+        }
+
+        document.getElementById("button-container").style.display = "none";
+      }
+    }
+
+    function goBack() //go back button
+    {
+      if (currentQuestionInn > 0)  //index not first
+      {
+        currentQuestionInn--;
+        answerHistory.pop();
+        document.getElementById("question-box").textContent = questions[currentQuestionInn];
+        document.getElementById("button-container").style.display = "inline-block";
+        document.getElementById("retry-button").style.display = "none";
+      }
+    }
+
+    function resetQuiz() //reset
+    {
+      answerHistory = [];
+      currentQuestionInn = 0;
+      document.getElementById("question-box").textContent = questions[0];
+      document.getElementById("button-container").style.display = "inline-block";
+      document.getElementById("retry-button").style.display = "none";
+    }
+  </script>
+</body>
+</html>
