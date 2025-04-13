@@ -1,4 +1,4 @@
-let nibbles = 0;
+let nibbles = 5000;
 let nibblePerKey = 1;
 let snippetIndex = 0;
 let codeSnippets = []; 
@@ -7,7 +7,8 @@ let keyboardCost = 10;
 let caffeineCost = 1000;
 let nibblesPerSecond = 0; 
 let monitorCost = 2000
-let aiUpgradeCost = 500;
+let aiUpgradeCost = 20;
+let showerCost = 5000;
 
 
 let aiInterval = 2000;
@@ -20,7 +21,7 @@ function upgradeAI() {
     document.getElementById('nibble-count').textContent = nibbles;
 
     aiUpgrades++;
-    aiUpgradeCost = Math.floor(aiUpgradeCost * 1.5); 
+    aiUpgradeCost = Math.floor(aiUpgradeCost * 1.13); 
     document.getElementById('ai-upgrade-cost').textContent = aiUpgradeCost;
 
     if (aiIntervalId) clearInterval(aiIntervalId); 
@@ -115,5 +116,29 @@ function updateNibblesPerSecond() {
     document.getElementById('nibbles-per-second').textContent = `Nibbles per second: ${nibblesPerSecond}`;
   }, 1000);
 }
+function takeAShower() {
+  if (nibbles >= showerCost) {
+    nibbles -= showerCost;
+    document.getElementById('nibble-count').textContent = nibbles;
 
+    const originalNibblePerKey = nibblePerKey;
+    const originalNibblesPerSecond = nibblesPerSecond;
+
+    nibblePerKey = Math.floor(nibblePerKey / 2);
+    nibblesPerSecond = Math.floor(nibblesPerSecond / 2);
+
+    setTimeout(() => {
+      nibblePerKey = originalNibblePerKey;
+      nibblesPerSecond = originalNibblesPerSecond;
+
+      nibblePerKey = Math.floor(nibblePerKey * 1.3);
+      nibblesPerSecond = Math.floor(nibblesPerSecond * 1.3);
+
+      document.getElementById('nibbles-per-second').textContent = `Nibbles per second: ${nibblesPerSecond}`;
+    }, 180000); // 3 minutes in milliseconds
+
+    showerCost = Math.floor(showerCost * 1.5);
+    document.getElementById('shower-cost').textContent = showerCost;
+  }
+}
 updateNibblesPerSecond();
