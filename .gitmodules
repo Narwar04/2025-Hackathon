@@ -1,0 +1,6 @@
+[submodule "Documents/Arduino/Sumo/BananaLib"]
+	path = Documents/Arduino/Sumo/BananaLib
+	url = https://github.com/BananaHoarders/BananaLib.git
+[submodule "Documents/Arduino/Sumo/src/BananaLib"]
+	path = Documents/Arduino/Sumo/src/BananaLib
+	url = https://github.com/BananaHoarders/BananaLib.git
